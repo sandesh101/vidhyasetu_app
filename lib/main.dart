@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vidhyasetu_app/core/config/app_constant.dart';
+import 'package:vidhyasetu_app/core/config/app_theme.dart';
+import 'package:vidhyasetu_app/routing/app_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -9,13 +13,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(),
+      title: AppConstant.appName,
+      theme: AppTheme.lightTheme,
+      // home: const MyHomePage(),
+      routerConfig: router,
     );
   }
 }
@@ -25,6 +28,16 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: Container(
+          color: Theme.of(context).primaryColor,
+          child: Text(
+            'Hello World',
+            style: TextStyle(color: AppTheme.accentColor),
+          ),
+        ),
+      ),
+    );
   }
 }
