@@ -1,10 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:unicons/unicons.dart';
 import 'package:vidhyasetu_app/core/config/app_theme.dart';
-import '../features/pages.dart';
+import '../pages.dart';
 
 class MainPages extends StatefulWidget {
   const MainPages({super.key});

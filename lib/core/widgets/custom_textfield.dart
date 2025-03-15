@@ -7,6 +7,7 @@ class CustomTextfield extends StatelessWidget {
   final Icon icon;
   final Icon? trailingIcon;
   final String labelText;
+  final String? hintText;
   final Color? labelColor;
   final Color? borderColor;
   final bool isObscure;
@@ -29,6 +30,7 @@ class CustomTextfield extends StatelessWidget {
     this.trailingIcon,
     this.labelColor,
     this.borderColor,
+    this.hintText,
   });
 
   @override
@@ -68,6 +70,8 @@ class CustomTextfield extends StatelessWidget {
               color: labelColor ?? AppTheme.primaryColor,
             ),
           ),
+          hintText: hintText,
+          hintStyle: TextStyle(color: AppTheme.backgroundColor.withAlpha(90)),
         ),
         validator: validator,
       ),
