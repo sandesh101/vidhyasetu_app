@@ -47,6 +47,7 @@ class UploadScreen extends StatelessWidget {
         child: Column(
           spacing: 20,
           children: [
+            SizedBox(height: 1),
             CustomTextfield(
               controller: titleController,
               labelText: "Title",
