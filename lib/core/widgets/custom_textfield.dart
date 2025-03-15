@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:vidhyasetu_app/core/config/app_theme.dart';
 
 class CustomTextfield extends StatelessWidget {
@@ -11,6 +10,8 @@ class CustomTextfield extends StatelessWidget {
   final String? Function(String?)? validator;
   final int? maxLines;
   final Function(String)? onChanged;
+  final FocusNode? focusNode; // Added FocusNode parameter
+
   const CustomTextfield({
     super.key,
     required this.controller,
@@ -21,6 +22,7 @@ class CustomTextfield extends StatelessWidget {
     this.validator,
     this.maxLines,
     this.onChanged,
+    this.focusNode, // Accepting FocusNode as an optional parameter
   });
 
   @override
@@ -28,6 +30,7 @@ class CustomTextfield extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
       child: TextFormField(
+        focusNode: focusNode, // Assigning the FocusNode
         onChanged: onChanged,
         keyboardType: textInputType ?? TextInputType.text,
         maxLines: maxLines ?? 1,
@@ -41,7 +44,6 @@ class CustomTextfield extends StatelessWidget {
           ),
           prefixIcon: icon,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
-          // hintText: "Email",
           label: Text(
             labelText,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
