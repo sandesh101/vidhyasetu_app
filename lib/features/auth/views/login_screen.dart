@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:unicons/unicons.dart';
 import 'package:vidhyasetu_app/core/config/app_theme.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_button.dart';
@@ -105,7 +106,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text("Don't have an account?"),
                           SizedBox(width: 15),
-                          CustomTextButton(buttonText: "Sign up"),
+                          CustomTextButton(
+                            buttonText: "Sign up",
+                            onPressed: () => context.go('/signup'),
+                          ),
                         ],
                       ),
                     ],
