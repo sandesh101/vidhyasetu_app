@@ -13,7 +13,7 @@ class SearchPage extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(170), // Set height properly
+        preferredSize: const Size.fromHeight(170),
         child: AppBar(
           backgroundColor: AppTheme.primaryColor,
           flexibleSpace: Padding(

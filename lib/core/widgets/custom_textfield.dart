@@ -4,11 +4,12 @@ import 'package:vidhyasetu_app/core/config/app_theme.dart';
 class CustomTextfield extends StatelessWidget {
   final TextInputType? textInputType;
   final TextEditingController controller;
-  final Icon icon;
+  final Icon? icon;
   final Icon? trailingIcon;
   final String labelText;
   final String? hintText;
   final Color? labelColor;
+  final Color? hintColor;
   final Color? borderColor;
   final bool isObscure;
   final String? Function(String?)? validator;
@@ -20,7 +21,7 @@ class CustomTextfield extends StatelessWidget {
     super.key,
     required this.controller,
     this.textInputType,
-    required this.icon,
+    this.icon,
     required this.labelText,
     required this.isObscure,
     this.validator,
@@ -31,6 +32,7 @@ class CustomTextfield extends StatelessWidget {
     this.labelColor,
     this.borderColor,
     this.hintText,
+    this.hintColor,
   });
 
   @override
@@ -71,7 +73,9 @@ class CustomTextfield extends StatelessWidget {
             ),
           ),
           hintText: hintText,
-          hintStyle: TextStyle(color: AppTheme.backgroundColor.withAlpha(90)),
+          hintStyle: TextStyle(
+            color: hintColor ?? AppTheme.backgroundColor.withAlpha(90),
+          ),
         ),
         validator: validator,
       ),
