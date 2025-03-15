@@ -7,8 +7,9 @@ class CustomTextfield extends StatelessWidget {
   final Icon icon;
   final Icon? trailingIcon;
   final String labelText;
+  final Color? labelColor;
+  final Color? borderColor;
   final bool isObscure;
-  final bool? isShowSuffixIcon;
   final String? Function(String?)? validator;
   final int? maxLines;
   final Function(String)? onChanged;
@@ -26,7 +27,8 @@ class CustomTextfield extends StatelessWidget {
     this.onChanged,
     this.focusNode,
     this.trailingIcon,
-    this.isShowSuffixIcon = false,
+    this.labelColor,
+    this.borderColor,
   });
 
   @override
@@ -44,14 +46,27 @@ class CustomTextfield extends StatelessWidget {
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(7)),
-            borderSide: BorderSide(color: AppTheme.primaryColor),
+            borderSide: BorderSide(color: borderColor ?? AppTheme.primaryColor),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(7)),
+            borderSide: BorderSide(
+              color: borderColor ?? AppTheme.primaryColor,
+            ), // Red color
           ),
           prefixIcon: icon,
-          suffixIcon: isShowSuffixIcon! ? trailingIcon : null,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
+          suffixIcon: trailingIcon,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(7),
+            borderSide: BorderSide(color: borderColor ?? AppTheme.primaryColor),
+          ),
           label: Text(
             labelText,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: labelColor ?? AppTheme.primaryColor,
+            ),
           ),
         ),
         validator: validator,

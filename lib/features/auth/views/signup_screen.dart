@@ -99,7 +99,6 @@ class SignUpScreen extends StatelessWidget {
                   isObscure: true,
                   focusNode: passwordFocus,
                   trailingIcon: const Icon(UniconsLine.eye_slash),
-                  isShowSuffixIcon: true,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: AppTheme.defaultPadding),
@@ -120,7 +119,6 @@ class SignUpScreen extends StatelessWidget {
                   isObscure: true,
                   focusNode: confirmPasswordFocus,
                   trailingIcon: const Icon(UniconsLine.eye_slash),
-                  isShowSuffixIcon: true,
                 ),
                 const SizedBox(height: 20),
                 CustomButton(buttonText: "Sign up"),

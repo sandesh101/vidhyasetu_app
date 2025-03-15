@@ -98,10 +98,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: 'Password',
                         isObscure: true,
                         trailingIcon: Icon(UniconsLine.eye_slash),
-                        isShowSuffixIcon: true,
+                        // isShowSuffixIcon: true,
                         focusNode: _passwordFocus, // Assign focus node
                       ),
-                      CustomButton(buttonText: "Login"),
+                      CustomButton(
+                        buttonText: "Login",
+                        onPressed: () => context.go('/home'),
+                      ),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
