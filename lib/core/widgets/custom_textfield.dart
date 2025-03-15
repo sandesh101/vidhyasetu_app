@@ -5,12 +5,14 @@ class CustomTextfield extends StatelessWidget {
   final TextInputType? textInputType;
   final TextEditingController controller;
   final Icon icon;
+  final Icon? trailingIcon;
   final String labelText;
   final bool isObscure;
+  final bool? isShowSuffixIcon;
   final String? Function(String?)? validator;
   final int? maxLines;
   final Function(String)? onChanged;
-  final FocusNode? focusNode; // Added FocusNode parameter
+  final FocusNode? focusNode;
 
   const CustomTextfield({
     super.key,
@@ -22,7 +24,9 @@ class CustomTextfield extends StatelessWidget {
     this.validator,
     this.maxLines,
     this.onChanged,
-    this.focusNode, // Accepting FocusNode as an optional parameter
+    this.focusNode,
+    this.trailingIcon,
+    this.isShowSuffixIcon = false,
   });
 
   @override
@@ -43,6 +47,7 @@ class CustomTextfield extends StatelessWidget {
             borderSide: BorderSide(color: AppTheme.primaryColor),
           ),
           prefixIcon: icon,
+          suffixIcon: isShowSuffixIcon! ? trailingIcon : null,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
           label: Text(
             labelText,

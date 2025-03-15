@@ -97,6 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         icon: Icon(UniconsLine.lock),
                         labelText: 'Password',
                         isObscure: true,
+                        trailingIcon: Icon(UniconsLine.eye_slash),
+                        isShowSuffixIcon: true,
                         focusNode: _passwordFocus, // Assign focus node
                       ),
                       CustomButton(buttonText: "Login"),
