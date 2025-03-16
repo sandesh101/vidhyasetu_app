@@ -9,7 +9,7 @@ class DetailContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
@@ -27,7 +27,7 @@ class DetailContainer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.08,
+            height: MediaQuery.of(context).size.height * 0.1,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: AppTheme.primaryColor,
@@ -87,7 +87,7 @@ class DetailContainer extends StatelessWidget {
                       "Science",
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: AppTheme.backgroundColor,
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -146,7 +146,7 @@ class DetailContainer extends StatelessWidget {
                 CustomButton(
                   buttonText: "Download",
                   icon: UniconsLine.import,
-                  width: MediaQuery.of(context).size.width * 0.35,
+                  width: MediaQuery.of(context).size.width * 0.36,
                   height: MediaQuery.of(context).size.height * 0.033,
                   color: AppTheme.backgroundColor,
                   textColor: AppTheme.secondaryTextColor,

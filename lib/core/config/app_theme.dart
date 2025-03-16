@@ -6,6 +6,7 @@ class AppTheme {
   static const Color accentColor = Color(0xFFFFD700); // Bright Yellow
   static const Color backgroundColor = Color(0xFFF5F5F5); // Light Grey
   static const Color greyColor = Color(0xFF787878); // Light Grey
+  static const Color lightGreyColor = Color(0xFFBEBEBE); // Light Grey
   static const Color secondaryTextColor = Color(0xFF000000); // Dark Grey
   static const Color successColor = Color(0xFF28A745); // Green
   static const Color errorColor = Color(0xFFDC3545); // Red

@@ -36,12 +36,10 @@ class _MainPagesState extends State<MainPages> {
           ],
         ),
         child: GNav(
-          gap: 8,
           backgroundColor: AppTheme.backgroundColor,
           color: AppTheme.greyColor,
           activeColor: AppTheme.secondaryTextColor,
-          // tabBackgroundColor: AppTheme.accentColor,
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
           onTabChange: onNavBarTapped,
           selectedIndex: selectedNavBarIndex,
           tabs: const [
