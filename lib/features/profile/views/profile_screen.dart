@@ -63,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => context.go('/profileSetting'),
+                      onTap: () => context.push('/profileSetting'),
                       child: Icon(
                         UniconsLine.setting,
                         color: AppTheme.backgroundColor,

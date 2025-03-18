@@ -48,7 +48,7 @@ class CustomButton extends StatelessWidget {
                     child: Icon(
                       icon,
                       color: textColor ?? AppTheme.backgroundColor,
-                      size: 20,
+                      size: 18,
                     ),
                   )
                   : Container(),
@@ -58,7 +58,7 @@ class CustomButton extends StatelessWidget {
                   buttonText,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: textColor ?? AppTheme.backgroundColor,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

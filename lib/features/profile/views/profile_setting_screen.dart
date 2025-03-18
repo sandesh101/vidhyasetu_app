@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:unicons/unicons.dart';
 import 'package:vidhyasetu_app/core/config/app_theme.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_button.dart';
@@ -18,6 +19,12 @@ class ProfileSettingScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(UniconsLine.angle_left),
+          iconSize: 30,
+          color: AppTheme.backgroundColor,
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           'Setting',
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
