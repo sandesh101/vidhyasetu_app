@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:unicons/unicons.dart';
 import 'package:vidhyasetu_app/core/config/app_theme.dart';
 
@@ -61,7 +62,13 @@ class ProfileScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Icon(UniconsLine.setting, color: AppTheme.backgroundColor),
+                    GestureDetector(
+                      onTap: () => context.go('/profileSetting'),
+                      child: Icon(
+                        UniconsLine.setting,
+                        color: AppTheme.backgroundColor,
+                      ),
+                    ),
                   ],
                 ),
               ],
