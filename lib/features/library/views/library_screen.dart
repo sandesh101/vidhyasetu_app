@@ -31,22 +31,16 @@ class LibraryScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            SizedBox(height: 20),
-            Padding(
+          children: List.generate(
+            5,
+            (index) => Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppTheme.defaultPadding,
+                vertical: AppTheme.smallPadding,
               ),
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (context, index) => LibraryContainer(),
-                ),
-              ),
+              child: LibraryContainer(),
             ),
-          ],
+          ),
         ),
       ),
     );
