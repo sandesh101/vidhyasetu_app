@@ -34,7 +34,10 @@ class CustomButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: color ?? AppTheme.primaryColor,
             borderRadius: BorderRadius.circular(7),
-            border: Border.all(color: AppTheme.primaryColor, width: 1),
+            border: Border.all(
+              color: borderColor ?? AppTheme.primaryColor,
+              width: 1,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +48,7 @@ class CustomButton extends StatelessWidget {
                     child: Icon(
                       icon,
                       color: textColor ?? AppTheme.backgroundColor,
-                      size: 16,
+                      size: 20,
                     ),
                   )
                   : Container(),
@@ -55,7 +58,7 @@ class CustomButton extends StatelessWidget {
                   buttonText,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: textColor ?? AppTheme.backgroundColor,
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
