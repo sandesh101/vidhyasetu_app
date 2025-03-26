@@ -6,7 +6,7 @@ import 'package:vidhyasetu_app/features/main_page.dart';
 import 'package:vidhyasetu_app/features/profile/views/profile_setting_screen.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: "/main",
+  initialLocation: "/login",
   routes: [
     GoRoute(path: "/login", builder: (context, state) => LoginScreen()),
     GoRoute(path: '/signup', builder: (context, state) => SignUpScreen()),

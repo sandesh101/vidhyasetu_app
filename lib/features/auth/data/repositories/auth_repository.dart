@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vidhyasetu_app/features/auth/data/auth_api.dart';
+import 'package:vidhyasetu_app/features/auth/data/models/user_model.dart';
 
 class AuthRepository {
   final AuthApi _authApi;
@@ -6,18 +9,32 @@ class AuthRepository {
   AuthRepository(this._authApi);
 
   //Login repository
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<UserModel> login(String email, String password) async {
     try {
       final response = await _authApi.login(email, password);
-      return response;
-    } catch (e) {
-      rethrow;
+      return UserModel.fromJson(response.toJson());
+    } on DioException catch (e) {
+      final errorMessage = e.response?.data["message"] ?? "Login failed";
+      throw Exception(errorMessage);
     }
   }
 
   //Register repository
+  Future<UserModel> register(String name, String email, String password) async {
+    try {
+      final response = await _authApi.signup(name, email, password);
+      return UserModel.fromJson(response.data);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
 
-  //Logout repository
+    //Logout repository
 
-  //Forgot password repository
+    //Forgot password repository
+  }
 }
+
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  final authApi = ref.watch(authApiProvider);
+  return AuthRepository(authApi);
+});

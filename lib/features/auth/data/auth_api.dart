@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vidhyasetu_app/core/services/api_service.dart';
+import 'package:vidhyasetu_app/features/auth/data/models/user_model.dart';
 
 class AuthApi {
   final Dio _dio;
@@ -8,33 +9,24 @@ class AuthApi {
   AuthApi(this._dio);
 
   //Login function
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<UserModel> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        '/login',
+        '/auth/login',
         data: {'email': email, 'password': password},
       );
-      return response.data;
-    } catch (e) {
-      rethrow;
+      return UserModel.fromJson(response.data);
+    } on DioException catch (e) {
+      return UserModel.fromJson(e.response!.data);
     }
   }
 
   //Register function
-  Future<Map<String, dynamic>> signup(
-    String name,
-    String email,
-    String password,
-  ) async {
-    try {
-      final response = await _dio.post(
-        '/register',
-        data: {'name': name, 'email': email, 'password': password},
-      );
-      return response.data;
-    } catch (e) {
-      rethrow;
-    }
+  Future<Response> signup(String name, String email, String password) async {
+    return _dio.post(
+      '/auth/register',
+      data: {'fullName': name, 'email': email, 'password': password},
+    );
   }
 
   //Logout function

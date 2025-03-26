@@ -1,20 +1,56 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vidhyasetu_app/features/auth/data/models/user_model.dart';
 import 'package:vidhyasetu_app/features/auth/data/repositories/auth_repository.dart';
 
-class AuthProvider extends StateNotifier<AsyncValue<Map<String, dynamic>>> {
-  final AuthRepository _authRepository;
-  AuthProvider(super.state, this._authRepository);
+class AuthNotifier extends AsyncNotifier<UserModel?> {
+  @override
+  Future<UserModel?> build() async {
+    return null;
+  }
 
-  //Login provider
+  // Login function
   Future<void> login(String email, String password) async {
-    state = AsyncValue.loading();
+    state = const AsyncValue.loading();
     try {
-      final response = await _authRepository.login(email, password);
-      // return response;
-      state = AsyncValue.data(response);
-    } catch (e, stack) {
-      // rethrow;
-      state = AsyncValue.error(e.toString(), stack);
+      final user = await ref
+          .read(authRepositoryProvider)
+          .login(email, password);
+      state = AsyncValue.data(user);
+    } on DioException catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
+    }
+  }
+
+  // User registration function
+  Future<void> register(String name, String email, String password) async {
+    state = const AsyncValue.loading();
+    try {
+      final user = await ref
+          .read(authRepositoryProvider)
+          .register(name, email, password);
+      state = AsyncValue.data(user);
+    } on DioException catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
+    } catch (e, stackTrace) {
+      log("message: $e");
+      state = AsyncValue.error(e, stackTrace);
+    }
+  }
+
+  // Logout function
+  Future<void> logout() async {
+    state = const AsyncValue.loading();
+    try {
+      //Logout
+    } catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
     }
   }
 }
+
+final authProvider = AsyncNotifierProvider<AuthNotifier, UserModel?>(() {
+  return AuthNotifier();
+});

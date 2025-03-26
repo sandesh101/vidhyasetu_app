@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vidhyasetu_app/core/config/app_constant.dart';
 
 class ApiService {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: "WILL BE BASE URL",
+      baseUrl: AppConstant.baseUrl,
       connectTimeout: Duration(seconds: 10),
       receiveTimeout: Duration(seconds: 10),
       headers: {"Accept": "application/json"},

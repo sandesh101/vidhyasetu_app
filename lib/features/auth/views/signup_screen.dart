@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unicons/unicons.dart';
 import 'package:vidhyasetu_app/core/config/app_theme.dart';
+import 'package:vidhyasetu_app/core/utils/app_snackbar.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_button.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_text_button.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_textfield.dart';
+import 'package:vidhyasetu_app/features/auth/data/providers/auth_provider.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController fullNameController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController confirmPasswordController =
-        TextEditingController();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
+}
 
-    // Define FocusNodes
-    final FocusNode fullNameFocus = FocusNode();
-    final FocusNode emailFocus = FocusNode();
-    final FocusNode passwordFocus = FocusNode();
-    final FocusNode confirmPasswordFocus = FocusNode();
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+  final TextEditingController emailController = TextEditingController(
+    text: "test@gmail.com",
+  );
+  final TextEditingController fullNameController = TextEditingController(
+    text: "Test User",
+  );
+  final TextEditingController passwordController = TextEditingController(
+    text: "password",
+  );
+  final TextEditingController confirmPasswordController = TextEditingController(
+    text: "password",
+  );
+  @override
+  Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
 
     return SafeArea(
       child: Scaffold(
@@ -83,21 +93,21 @@ class SignUpScreen extends StatelessWidget {
                   icon: const Icon(UniconsLine.user),
                   labelText: "Full Name",
                   isObscure: false,
-                  focusNode: fullNameFocus,
+                  // focusNode: fullNameFocus,
                 ),
                 CustomTextfield(
                   controller: emailController,
                   icon: const Icon(UniconsLine.envelope),
                   labelText: "Email",
                   isObscure: false,
-                  focusNode: emailFocus,
+                  // focusNode: emailFocus,
                 ),
                 CustomTextfield(
                   controller: passwordController,
                   icon: const Icon(UniconsLine.lock),
                   labelText: "Password",
                   isObscure: true,
-                  focusNode: passwordFocus,
+                  // focusNode: passwordFocus,
                   trailingIcon: const Icon(UniconsLine.eye_slash),
                 ),
                 Padding(
@@ -117,11 +127,54 @@ class SignUpScreen extends StatelessWidget {
                   icon: const Icon(UniconsLine.lock),
                   labelText: "Confirm Password",
                   isObscure: true,
-                  focusNode: confirmPasswordFocus,
+                  // focusNode: confirmPasswordFocus,
                   trailingIcon: const Icon(UniconsLine.eye_slash),
                 ),
                 const SizedBox(height: 20),
-                CustomButton(buttonText: "Sign up"),
+                authState.when(
+                  data: (data) {
+                    return CustomButton(
+                      buttonText: "Sign up",
+                      onPressed: () {
+                        ref
+                            .read(authProvider.notifier)
+                            .register(
+                              fullNameController.text,
+                              emailController.text,
+                              passwordController.text,
+                            );
+                      },
+                    );
+                  },
+                  error: (error, stack) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      AppSnackbar.show(
+                        context,
+                        message: error.toString(),
+                        type: SnackBarType.error,
+                      );
+                    });
+                    return CustomButton(
+                      buttonText: 'Sign Up',
+                      onPressed: () {
+                        ref
+                            .read(authProvider.notifier)
+                            .register(
+                              fullNameController.text,
+                              emailController.text,
+                              passwordController.text,
+                            );
+                      },
+                    );
+                    // return ScaffoldMessenger.of(
+                    //   context,
+                    // ).showSnackBar(SnackBar(content: Text("$error")));
+                    // return Text("Error: $error");
+                  },
+                  loading: () {
+                    return const CircularProgressIndicator();
+                  },
+                ),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

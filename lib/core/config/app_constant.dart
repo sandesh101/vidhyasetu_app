@@ -1,6 +1,6 @@
 class AppConstant {
   // API URLs
-  static const String baseUrl = "";
+  static const String baseUrl = "http://192.168.1.7:5005/api/v1";
 
   // App Information
   static const String appName = "Vidhya Setu";

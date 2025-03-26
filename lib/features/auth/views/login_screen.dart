@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unicons/unicons.dart';
 import 'package:vidhyasetu_app/core/config/app_theme.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_button.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_text_button.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_textfield.dart';
+import 'package:vidhyasetu_app/features/auth/data/providers/auth_provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -56,6 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppTheme.backgroundColor,
@@ -101,10 +105,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         // isShowSuffixIcon: true,
                         focusNode: _passwordFocus, // Assign focus node
                       ),
-                      CustomButton(
-                        buttonText: "Login",
-                        onPressed: () => context.go('/home'),
+                      authState.when(
+                        data: (value) {
+                          return CustomButton(
+                            buttonText: "Login",
+                            onPressed: () {
+                              ref
+                                  .read(authProvider.notifier)
+                                  .login(
+                                    emailController.text,
+                                    passwordController.text,
+                                  );
+                            },
+                          );
+                        },
+                        loading: () {
+                          return CircularProgressIndicator();
+                        },
+                        error: (error, stack) {
+                          return Text("Error: $error");
+                        },
                       ),
+                      // CustomButton(
+                      //   buttonText: "Login",
+                      //   onPressed: () => context.go('/home'),
+                      // ),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
