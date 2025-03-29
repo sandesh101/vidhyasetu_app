@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vidhyasetu_app/features/auth/data/models/user_model.dart';
@@ -21,6 +19,8 @@ class AuthNotifier extends AsyncNotifier<UserModel?> {
       state = AsyncValue.data(user);
     } on DioException catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
+    } catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
     }
   }
 
@@ -35,7 +35,6 @@ class AuthNotifier extends AsyncNotifier<UserModel?> {
     } on DioException catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
     } catch (e, stackTrace) {
-      log("message: $e");
       state = AsyncValue.error(e, stackTrace);
     }
   }

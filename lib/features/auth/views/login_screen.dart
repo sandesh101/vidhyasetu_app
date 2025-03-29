@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unicons/unicons.dart';
 import 'package:vidhyasetu_app/core/config/app_theme.dart';
+import 'package:vidhyasetu_app/core/utils/app_snackbar.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_button.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_text_button.dart';
 import 'package:vidhyasetu_app/core/widgets/custom_textfield.dart';
@@ -16,8 +17,12 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(
+    text: "test@gmail.com",
+  );
+  final TextEditingController passwordController = TextEditingController(
+    text: "Test@123",
+  );
   final ScrollController _scrollController = ScrollController();
 
   // Focus Nodes
@@ -94,7 +99,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         icon: Icon(UniconsLine.envelope),
                         labelText: 'Email',
                         isObscure: false,
-                        focusNode: _emailFocus, // Assign focus node
+                        focusNode: _emailFocus,
                       ),
                       CustomTextfield(
                         controller: passwordController,
@@ -102,8 +107,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         labelText: 'Password',
                         isObscure: true,
                         trailingIcon: Icon(UniconsLine.eye_slash),
-                        // isShowSuffixIcon: true,
-                        focusNode: _passwordFocus, // Assign focus node
+                        focusNode: _passwordFocus,
                       ),
                       authState.when(
                         data: (value) {
@@ -123,13 +127,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           return CircularProgressIndicator();
                         },
                         error: (error, stack) {
-                          return Text("Error: $error");
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            AppSnackbar.show(
+                              context,
+                              message: error.toString(),
+                              type: SnackBarType.error,
+                            );
+                          });
+                          return CustomButton(
+                            buttonText: 'Login',
+                            onPressed: () {
+                              ref
+                                  .read(authProvider.notifier)
+                                  .login(
+                                    emailController.text,
+                                    passwordController.text,
+                                  );
+                            },
+                          );
                         },
                       ),
-                      // CustomButton(
-                      //   buttonText: "Login",
-                      //   onPressed: () => context.go('/home'),
-                      // ),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

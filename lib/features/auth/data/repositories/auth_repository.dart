@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vidhyasetu_app/features/auth/data/auth_api.dart';
@@ -12,10 +14,10 @@ class AuthRepository {
   Future<UserModel> login(String email, String password) async {
     try {
       final response = await _authApi.login(email, password);
-      return UserModel.fromJson(response.toJson());
+      return UserModel.fromJson(response.data);
     } on DioException catch (e) {
-      final errorMessage = e.response?.data["message"] ?? "Login failed";
-      throw Exception(errorMessage);
+      log(e.toString());
+      throw Exception(e.toString());
     }
   }
 
@@ -25,6 +27,7 @@ class AuthRepository {
       final response = await _authApi.signup(name, email, password);
       return UserModel.fromJson(response.data);
     } catch (e) {
+      log(e.toString());
       throw Exception(e.toString());
     }
 
