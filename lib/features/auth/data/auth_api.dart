@@ -18,10 +18,14 @@ class AuthApi {
 
   //Register function
   Future<Response> signup(String name, String email, String password) async {
-    return await _dio.post(
-      '/auth/register',
-      data: {'fullName': name, 'email': email, 'password': password},
-    );
+    return await _dio
+        .post(
+          '/auth/register',
+          data: {'fullName': name, 'email': email, 'password': password},
+        )
+        .catchError((e) {
+          throw Exception(e.response?.data["message"] ?? 'Unknown error');
+        });
   }
 
   //Logout function
