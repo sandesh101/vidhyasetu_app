@@ -24,7 +24,7 @@ class AuthApi {
           data: {'fullName': name, 'email': email, 'password': password},
         )
         .catchError((e) {
-          throw Exception(e.response?.data["message"] ?? 'Unknown error');
+          throw Exception(e.response?.data["message"]);
         });
   }
 

@@ -28,6 +28,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   // Focus Nodes
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
+  bool _errorShown = false;
 
   @override
   void initState() {
@@ -111,6 +112,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       authState.when(
                         data: (value) {
+                          _errorShown = false;
                           return CustomButton(
                             buttonText: "Login",
                             onPressed: () {
@@ -127,16 +129,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           return CircularProgressIndicator();
                         },
                         error: (error, stack) {
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            AppSnackbar.show(
-                              context,
-                              message: error.toString(),
-                              type: SnackBarType.error,
-                            );
-                          });
+                          if (!_errorShown) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              AppSnackbar.show(
+                                context,
+                                message: error.toString(),
+                                type: SnackBarType.error,
+                              );
+                            });
+                            _errorShown = true;
+                          }
                           return CustomButton(
                             buttonText: 'Login',
                             onPressed: () {
+                              _errorShown = false;
                               ref
                                   .read(authProvider.notifier)
                                   .login(

@@ -166,10 +166,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                             );
                       },
                     );
-                    // return ScaffoldMessenger.of(
-                    //   context,
-                    // ).showSnackBar(SnackBar(content: Text("$error")));
-                    // return Text("Error: $error");
                   },
                   loading: () {
                     return const CircularProgressIndicator();

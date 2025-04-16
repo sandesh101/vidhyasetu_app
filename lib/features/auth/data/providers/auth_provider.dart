@@ -1,4 +1,5 @@
-import 'package:dio/dio.dart';
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vidhyasetu_app/features/auth/data/models/user_model.dart';
 import 'package:vidhyasetu_app/features/auth/data/repositories/auth_repository.dart';
@@ -16,11 +17,14 @@ class AuthNotifier extends AsyncNotifier<UserModel?> {
       final user = await ref
           .read(authRepositoryProvider)
           .login(email, password);
-      state = AsyncValue.data(user);
-    } on DioException catch (e, stackTrace) {
-      state = AsyncValue.error(e, stackTrace);
+      if (user.statusCode == 200) {
+        state = AsyncValue.data(user);
+      } else {
+        state = AsyncError("Invalid credentials", StackTrace.current);
+      }
     } catch (e, stackTrace) {
-      state = AsyncValue.error(e, stackTrace);
+      log(e.toString());
+      state = AsyncError(e.toString(), stackTrace);
     }
   }
 
@@ -31,11 +35,13 @@ class AuthNotifier extends AsyncNotifier<UserModel?> {
       final user = await ref
           .read(authRepositoryProvider)
           .register(name, email, password);
-      state = AsyncValue.data(user);
-    } on DioException catch (e, stackTrace) {
-      state = AsyncValue.error(e, stackTrace);
+      if (user.statusCode == 200) {
+        state = AsyncValue.data(user);
+      } else {
+        state = AsyncError(user.message.toString(), StackTrace.current);
+      }
     } catch (e, stackTrace) {
-      state = AsyncValue.error(e, stackTrace);
+      state = AsyncError(e.toString(), stackTrace);
     }
   }
 
